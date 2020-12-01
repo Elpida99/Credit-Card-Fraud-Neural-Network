@@ -9,12 +9,6 @@ Harokopio University of Athens, 2020
 
 from assignment1 import load_dataset, train_model, evaluate_model
 
-"""
-#for question 6:
-from assignment1 import load_dataset, evaluate_model
-from Question_6 import train_model
-"""
-
 
 X_train, y_train, X_test, y_test = load_dataset('creditcard.csv')
 model, m_train, s_train = train_model(X_train, y_train)
