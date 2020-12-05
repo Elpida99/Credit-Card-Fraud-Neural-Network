@@ -8,12 +8,12 @@ print(__doc__)
 
 import numpy as np
 from sklearn import preprocessing
-import keras
-from keras import layers
+from tensorflow import keras
+from tensorflow.keras import layers
 
 from assignment1 import load_dataset, evaluate_model
 
-##HAPARAMS !!!!!!
+##HAPARAMS !!!!!! currently with default
 
 def train_model(X_train, y_train, hparams=None):
     scaler = preprocessing.StandardScaler()
@@ -44,15 +44,20 @@ def train_model(X_train, y_train, hparams=None):
     return model, m_train, s_train
 
 
-f1_score = []
+f1_scores = []
+
 for i in range(10):
+    print("Iterarion ",i)
     rp_train = np.random.random_sample() #random p_train for splitting the train and test dataset
-    print(rp_train)
+
     X_train, y_train, X_test, y_test = load_dataset('creditcard.csv', rp_train)
     #hparams = {'epochs':10 , 'learning_rate':0.001}
     model, m_train, s_train = train_model(X_train, y_train)
+
     pred, accuracy, precision, recall, f1 = evaluate_model(model, X_test, y_test, m_train, s_train)
-    print(f"f1 is: {f1}")
-    f1_score.append(f1)
-print(np.mean(f1_score))
-print(np.std(f1_score))
+
+    #print(f"f1 is: {f1}")
+    f1_scores.append(f1)
+
+print(np.mean(f1_scores))
+print(np.std(f1_scores))
