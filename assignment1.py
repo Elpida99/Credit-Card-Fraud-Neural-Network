@@ -1,3 +1,6 @@
+"""
+Elpida Makri - it21735
+"""
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -44,7 +47,7 @@ def train_model(X_train, y_train, hparams=None):
 
     model.compile(optimizer=keras.optimizers.SGD(learning_rate=hparams['learning_rate']), loss=keras.losses.BinaryCrossentropy(), metrics=["accuracy"])
 
-    model.fit(X_train, y_train, epochs=hparams['epochs'], shuffle=False)
+    model.fit(X_train, y_train, epochs=hparams['epochs'], batch_size=32, shuffle=False)
 
     return model, m_train, s_train
 
@@ -56,13 +59,17 @@ def evaluate_model(model, X_test, y_test, m, s):
         for row in range(X_test.shape[0]):
             X_test[row][col] = (X_test[row][col] - m[col]) / s[col]
 
+    score = model.evaluate(X_test, y_test)
+    accuracy = score[1]
+
     y_pred = (model.predict(X_test) > 0.5).astype("int32") #calculate the predicted y for X_test
 
     #calculate the accuracy, precision, recall and f1-score of the model:
-    accuracy = accuracy_score(y_test, y_pred)
+    #accuracy = accuracy_score(y_test, y_pred)
 
     precision = precision_score(y_test, y_pred)
     recall = recall_score(y_test, y_pred)
     f1 = f1_score(y_test, y_pred)
 
     return y_pred, accuracy, precision, recall, f1
+
