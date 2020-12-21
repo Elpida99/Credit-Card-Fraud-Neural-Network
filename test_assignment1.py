@@ -9,7 +9,7 @@ Harokopio University of Athens, 2020
 
 from assignment1 import load_dataset, train_model, evaluate_model
 
-X_train, y_train, X_test, y_test = load_dataset('creditcard.csv')
+X_train, y_train, X_test, y_test = load_dataset('creditcard.csv', p_train=0.7)
 model, m_train, s_train = train_model(X_train, y_train)
 pred, accuracy, precision, recall, f1 = evaluate_model(
     model, X_test, y_test, m_train, s_train)
